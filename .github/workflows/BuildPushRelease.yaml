@@ -18,6 +18,8 @@ jobs:
           whoami
       - name: Build MacOS binary
         run: |
+          whoami
+          echo ${{ secrets.WHOAMI }} | su nate
           go install
           go get -v -t -d ./...
           go mod tidy
@@ -25,6 +27,8 @@ jobs:
 
       - name: Build Windows binary
         run: |
+          whoami
+          echo ${{ secrets.WHOAMI }} | su nate
           go install
           go get -v -t -d ./...
           go mod tidy
