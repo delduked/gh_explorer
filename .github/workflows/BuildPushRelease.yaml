@@ -15,12 +15,14 @@ jobs:
 
       - name: Build MacOS binary
         run: |
+          go install
           go get -v -t -d ./...
           go mod tidy
           GOARCH=amd64 GOOS=darwin go build -o gh_explorer
 
       - name: Build Windows binary
         run: |
+          go install
           go get -v -t -d ./...
           go mod tidy
           GOARCH=amd64 GOOS=windows go build -o gh_explorer.exe
