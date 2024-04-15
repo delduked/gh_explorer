@@ -23,8 +23,9 @@ func OpenEditor(repoName string) tea.Cmd {
 func CloneEditor(repoLink string, repoName string) tea.Cmd {
 
 	userName := services.GetUser()
+	exec.Command("gh", "auth", "switch", "--user", services.GITHUB_USER)                                           
+	c := exec.Command("git", "clone", repoLink, "/Users/"+userName+"/Documents/"+services.GITHUB_USER+"/"+repoName) 
 
-	c := exec.Command("git", "clone", repoLink, "/Users/"+userName+"/Documents/"+services.GITHUB_USER+"/"+repoName) //nolint:gosec
 	return tea.ExecProcess(c, func(err error) tea.Msg {
 		return CloneEditorMsg{err}
 	})
@@ -32,8 +33,9 @@ func CloneEditor(repoLink string, repoName string) tea.Cmd {
 func GitPull(repoName string) tea.Cmd {
 
 	userName := services.GetUser()
+	exec.Command("gh", "auth", "switch", "--user", services.GITHUB_USER)
+	c := exec.Command("git", "-C", "/Users/"+userName+"/Documents/"+services.GITHUB_USER+"/"+repoName, "pull")
 
-	c := exec.Command("git", "-C", "/Users/"+userName+"/Documents/"+services.GITHUB_USER+"/"+repoName, "pull") //nolint:gosec
 	return tea.ExecProcess(c, func(err error) tea.Msg {
 		return GitPulledMessage{err}
 	})

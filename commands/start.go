@@ -30,7 +30,7 @@ var (
 				Border(lipgloss.RoundedBorder()).
 				BorderForeground(lipgloss.Color("62"))
 	FocusRepoStyle = lipgloss.NewStyle().
-			Padding(0, 2).
+			Padding(0, 1).
 			Border(lipgloss.HiddenBorder())
 	StatusMessageStyle = lipgloss.NewStyle().
 				Foreground(lipgloss.AdaptiveColor{Light: "#04B575", Dark: "#04B575"}).
@@ -86,10 +86,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 
 		if m.Focused != Loading {
 			FocusRepoStyle.
-				Width((msg.Width / divisor) + 10).
+				Width(msg.Width).
 				Height(msg.Height - 6)
 			UnFocusRepoStyle.
-				Width((msg.Width / divisor) + 10).
+				Width(msg.Width).
 				Height(msg.Height - 6)
 			m.Focused = ChooseRepo
 			m.Lists[ChooseRepo].SetSize(msg.Width, msg.Height-6)
@@ -109,10 +109,10 @@ func (m Model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 			m.Focused = ChooseRepo
 
 			FocusRepoStyle.
-				Width((m.Width / divisor) + 10).
+				Width(m.Width).
 				Height(m.Height - 6)
 			UnFocusRepoStyle.
-				Width((m.Width / divisor) + 10).
+				Width(m.Width).
 				Height(m.Height - 6)
 
 			defaultList := list.New([]list.Item{}, list.NewDefaultDelegate(), 0, 0)
@@ -269,7 +269,7 @@ func (m *Model) View() string {
 		repoView := m.Lists[ChooseRepo].View()
 		return lipgloss.JoinVertical(
 			lipgloss.Top,
-			lipgloss.JoinHorizontal(lipgloss.Left, UnFocusRepoStyle.Render(repoView)),
+			lipgloss.JoinHorizontal(lipgloss.Left, FocusRepoStyle.Render(repoView)),
 			helpStyle(helpView),
 		)
 	}
