@@ -37,6 +37,11 @@ jobs:
           echo "tag=v_${COMMIT_SHA}.${HEX_UNIX_TIME}" >> $GITHUB_OUTPUT
           echo "tagname=${DATE}_${COMMIT_SHA}" >> $GITHUB_OUTPUT
 
+      - name: Install GH CLI
+        uses: dev-hanz-ops/install-gh-cli-action@v0.1.0
+        with:
+          gh-cli-version: 2.32.0 # optional, see action.yml for current default
+
       - name: create and push tag
         run: |
           echo ${{ secrets.ACCESS_TOKEN }} | gh auth login --with-token
